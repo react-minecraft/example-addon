@@ -1,0 +1,6 @@
+name: '${name}'
+version: '${version}'
+
+mainClass: com.example.addon.ExampleAddon
+
+description: '${description}'

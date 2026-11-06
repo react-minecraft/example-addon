@@ -1,0 +1,5 @@
+# Who gets the message: players with this permission.
+permission: react.example.notify
+
+# Placeholders: %player%, %check%, %violations%
+message: '&c[React] &f%player% &7failed &f%check% &7(&f%violations%&7)'
