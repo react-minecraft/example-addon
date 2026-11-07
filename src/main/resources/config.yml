@@ -1,5 +1,5 @@
 # Who gets the message: players with this permission.
 permission: react.example.notify
 
-# Placeholders: {player}, {check}, {violations}
-message: '<red>[React] <white>{player} <gray>failed <white>{check} <gray>(<white>{violations}<gray>)'
+# Placeholders: <player>, <check>, <violations>
+message: '<red>[React] <white><player> <gray>failed <white><check> <gray>(<white><violations><gray>)'

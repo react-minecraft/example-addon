@@ -46,14 +46,14 @@
 ## Что делает пример
 
 - на `onEnable` копирует `config.yml` в `plugins/React/addons/example-addon/`;
-- слушает `PlayerCheckFailEvent`: React шлёт его, когда игрок проваливает проверку, в том числе по результату RCP;
+- слушает `CheckFlagEvent` на шине событий React: он приходит перед каждым ростом VL, в том числе по результату RCP;
 - отправляет строку из конфига всем, у кого есть право `react.example.notify`;
-- снимает слушатель на `onDisable`.
+- слушатель регистрируется через `environment().listeners()`, React сам снимает его при выключении аддона.
 
 ```yaml
 permission: react.example.notify
-# Плейсхолдеры: {player}, {check}, {violations}
-message: '<red>[React] <white>{player} <gray>failed <white>{check} <gray>(<white>{violations}<gray>)'
+# Плейсхолдеры: <player>, <check>, <violations>
+message: '<red>[React] <white><player> <gray>failed <white><check> <gray>(<white><violations><gray>)'
 ```
 
 Сообщение понимает и MiniMessage, и `&`-коды.
