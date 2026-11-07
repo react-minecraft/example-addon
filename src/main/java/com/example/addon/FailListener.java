@@ -1,8 +1,9 @@
 package com.example.addon;
 
 import com.g4vrk.react.api.event.PlayerCheckFailEvent;
+import com.g4vrk.text.LegacySerializers;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -21,15 +22,15 @@ final class FailListener implements Listener {
 
     FailListener(final @NotNull String permission, final @NotNull String message) {
         this.permission = permission;
-        this.message = ChatColor.translateAlternateColorCodes('&', message);
+        this.message = message;
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onFail(final @NotNull PlayerCheckFailEvent event) {
-        final String line = message
-                .replace("%player%", event.player().name())
-                .replace("%check%", event.check().getName())
-                .replace("%violations%", String.format(Locale.ROOT, "%.1f", event.check().getViolations()));
+        final Component line = LegacySerializers.INSTANCE.universalSerializer().serialize(message
+                .replace("{player}", event.player().name())
+                .replace("{check}", event.check().getName())
+                .replace("{violations}", String.format(Locale.ROOT, "%.1f", event.check().getViolations())));
         Bukkit.getOnlinePlayers().stream()
                 .filter(player -> player.hasPermission(permission))
                 .forEach(player -> player.sendMessage(line));

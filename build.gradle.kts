@@ -12,6 +12,7 @@ dependencies {
     compileOnly("com.github.react-minecraft.plugin:react-api:${property("reactVersion")}")
     compileOnly("com.github.react-minecraft.plugin:react-common:${property("reactVersion")}")
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
+    compileOnly("com.github.g4vrk.TextSerializer:legacy:1.0.0")
 }
 
 tasks {

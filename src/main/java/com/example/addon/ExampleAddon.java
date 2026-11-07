@@ -37,8 +37,8 @@ public final class ExampleAddon extends JavaAddon {
             slf4jLogger().error("React is not loaded, the example addon stays idle");
             return;
         }
-        listener = new FailListener(config.getString("permission", "react.example.notify"),
-                config.getString("message", "%player% failed %check%"));
+        listener = new FailListener(config.getString("permission", ""),
+                config.getString("message", ""));
         Bukkit.getPluginManager().registerEvents(listener, react);
     }
 
