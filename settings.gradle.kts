@@ -1,7 +1,7 @@
 rootProject.name = "example-addon"
 
 // Builds against a local plugin checkout instead of jitpack when it sits next to this repository.
-val localPlugin = file("../react-vector")
+val localPlugin = file("../plugin")
 if (System.getenv("CI") == null && localPlugin.resolve("common").isDirectory) {
     includeBuild(localPlugin) {
         dependencySubstitution {
