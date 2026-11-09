@@ -38,11 +38,15 @@ final class FailListener {
     @Subscribe(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onFlag(final @NotNull CheckFlagEvent event) {
         final Check check = event.check();
-        final Component line = text.format(message,
+        final Component line = text.format(
+                message,
                 Placeholder.unparsed("player", check.player().name()),
                 Placeholder.unparsed("check", check.name()),
-                Placeholder.unparsed("violations",
-                        String.format(Locale.ROOT, "%.1f", check.violations() + event.amount())));
+                Placeholder.unparsed(
+                        "violations",
+                        String.format(Locale.ROOT, "%.1f", check.violations() + event.amount())
+                )
+        );
         Bukkit.getOnlinePlayers().stream()
                 .filter(player -> player.hasPermission(permission))
                 .forEach(player -> player.sendMessage(line));

@@ -21,8 +21,11 @@ public final class ExampleAddon extends JavaAddon {
     public void onEnable() {
         saveResource("config.yml", false);
         final YamlConfiguration config = YamlConfiguration.loadConfiguration(directory().resolve("config.yml").toFile());
-        environment().listeners().register(new FailListener(environment().text(),
-                config.getString("permission", ""), config.getString("message", "")));
+        environment().listeners().register(new FailListener(
+                environment().text(),
+                config.getString("permission", ""),
+                config.getString("message", "")
+        ));
     }
 
     @Override
