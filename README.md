@@ -1,92 +1,41 @@
 <div align="center">
 
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Manrope&weight=700&size=38&pause=1000&color=EB2544&background=FFFFFF00&center=true&vCenter=true&width=700&lines=Example+Addon;Your+own+addon+for+React" alt="Example Addon Typing SVG"/></a>
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Manrope&weight=700&size=38&pause=1000&color=EB2544&background=FFFFFF00&center=true&vCenter=true&width=700&lines=Example+Addon;Your+own+addon+for+React" alt="Example Addon"/></a>
 
-<p>Шаблон своего аддона для React</p>
+<p>Шаблон аддона на событиях React</p>
 
 <p>
-  <a href="https://github.com/react-minecraft/example-addon/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/react-minecraft/example-addon?style=flat&logo=opensourceinitiative&logoColor=white" alt="License">
-  </a>
+  <a href="https://react-ac.space"><img src="https://img.shields.io/badge/Website-EB2544?style=plastic&logo=googlechrome&logoColor=white" alt="Website"/></a>
+  <a href="https://t.me/react_ac"><img src="https://img.shields.io/badge/Telegram-26A5E4?style=plastic&logo=telegram&logoColor=white" alt="Telegram"/></a>
+  <a href="https://t.me/react_ac_support"><img src="https://img.shields.io/badge/Support-555555?style=plastic&logo=telegram&logoColor=white" alt="Support"/></a>
 </p>
 
 <p>
-  <a href="https://react-ac.space">Сайт</a>
-  &nbsp;•&nbsp;
-  <a href="https://t.me/react_ac">Канал</a>
-  &nbsp;•&nbsp;
-  <a href="https://t.me/react_ac_support">Поддержка</a>
+  <a href="https://github.com/react-minecraft/example-addon/blob/master/LICENSE"><img src="https://img.shields.io/github/license/react-minecraft/example-addon?style=plastic&logo=opensourceinitiative&logoColor=white" alt="License"/></a>
 </p>
 
 </div>
 
----
-
-## Что это?
-
-- Минимальный аддон для плагина [React](https://github.com/react-minecraft/plugin): пишет персоналу в чат, когда
-  игрок проваливает проверку.
-- Это шаблон: клонируете и меняете `FailListener` под себя.
-
----
-
-## Аддон или RCP?
-
-| Аддон                                           | RCP                                                      |
-|-------------------------------------------------|----------------------------------------------------------|
-| `plugins/React/addons/`, файл `react-addon.yml` | `plugins/React/.rcp/providers/`, файл `rcp-metadata.yml` |
-| Видит весь плагин (`react-common`)              | Видит только стабильный `react-api`                      |
-| Реагирует на события: флаги, история, игроки    | Даёт плагину модели и результаты проверок                |
-| Может сломаться при обновлении плагина          | Совместимость гарантирует `api-version`                  |
-
-Нужна своя модель или проверка - смотрите [example-rcp](https://github.com/react-minecraft/example-rcp).
-
----
-
 ## Что делает пример
 
-- на `onEnable` копирует `config.yml` в `plugins/React/addons/example-addon/`;
-- слушает `CheckFlagEvent` на шине событий React: он приходит перед каждым ростом VL, в том числе по результату RCP;
-- отправляет строку из конфига всем, у кого есть право `react.example.notify`;
-- слушатель регистрируется через `environment().listeners()`, React сам снимает его при выключении аддона.
+`ExampleAddon` копирует `config.yml` и регистрирует `FailListener` через `environment().listeners()`. Слушатель получает `CheckFlagEvent` перед увеличением уровня нарушения и отправляет уведомление игрокам с правом `react.example.notify`. Уведомления используют планировщик окружения и работают с MiniMessage и `&`-кодами.
 
 ```yaml
 permission: react.example.notify
-# Плейсхолдеры: <player>, <check>, <violations>
 message: '<red>[React] <white><player> <gray>failed <white><check> <gray>(<white><violations><gray>)'
 ```
 
-Сообщение понимает и MiniMessage, и `&`-коды.
+`<player>`, `<check>` и `<violations>` подставляются для каждого уведомления. Настройки лежат в `plugins/React/addons/example-addon/config.yml`.
 
----
+## Сборка и установка
 
-## Сборка & Установка
+Используйте JDK 21. Запустите `./gradlew build` или `.\gradlew.bat build` на Windows. Положите `build/libs/example-addon-1.0.0.jar` в `plugins/React/addons/` и выполните `/react reboot addons` или перезапустите сервер.
 
-1. `./gradlew build`
-2. Возьмите `build/libs/example-addon-1.0.0.jar`
-3. Положите его в `plugins/React/addons/`
-4. Перезапустите сервер
+Пример использует React API 2. Версия зависимости задаётся ключом `reactVersion` в `gradle.properties`. Сборка берёт `react-api` и `react-common` с JitPack.
 
----
+Если нужна собственная модель или логика анализа, смотрите [example-rcp](https://github.com/react-minecraft/example-rcp).
 
-## Зависимость
-
-Версия плагина задаётся в `gradle.properties` в ключе `reactVersion`: коммит или ветка плагина на JitPack.
-Если рядом лежит чекаут плагина (`../react-vector`), сборка берёт классы из него.
-
-```kotlin
-repositories {
-    maven("https://jitpack.io/")
-}
-
-dependencies {
-    compileOnly("com.github.react-minecraft.plugin:react-api:VERSION")
-    compileOnly("com.github.react-minecraft.plugin:react-common:VERSION")
-}
-```
-
----
 
 ## Лицензия
 
-Пример распространяется под MIT — см. [LICENSE](LICENSE).
+[MIT](LICENSE).
