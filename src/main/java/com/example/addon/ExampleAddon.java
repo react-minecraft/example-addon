@@ -14,23 +14,30 @@ public final class ExampleAddon extends JavaAddon {
 
     @Override
     public void onLoad() {
+
         logger().info("Example addon loaded");
+
     }
 
     @Override
     public void onEnable() {
+
         saveResource("config.yml", false);
         final YamlConfiguration config = YamlConfiguration.loadConfiguration(directory().resolve("config.yml").toFile());
         environment().listeners().register(new FailListener(
                 environment().text(),
+                environment().scheduler(),
                 config.getString("permission", ""),
                 config.getString("message", "")
         ));
+
     }
 
     @Override
     public void onDisable() {
+
         logger().info("Example addon disabled");
+
     }
 
 }
