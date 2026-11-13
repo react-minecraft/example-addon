@@ -30,6 +30,29 @@
 
 ## Аддон или RCP?
 
+### Вызов API установленного RCP
+
+`ExampleBootstrap` объявляет необязательную зависимость от `rcp:react-inference` с версией API `1`.
+React находит bootstrap по `META-INF/services/com.g4vrk.react.api.extension.bootstrap.ExtensionBootstrap`.
+Список зависимостей объявляется в Java. Для обязательной интеграции используй `context.require(id, 1)`.
+
+При компиляции аддон использует API RCP через `compileOnly` из JitPack. При запуске React открывает
+потребителю пакет `com.g4vrk.react.inference.api` установленного RCP. `ExampleAddon` проверяет
+`dependencyAvailable(id)` перед обращением к `InferenceIntegration`, которая импортирует `InferenceApi`
+и читает `modelIds()` через `environment.services().require(id, InferenceApi.class)`.
+
+Чтобы экспортировать API своего аддона, объяви `ExtensionId.addon(...)`, вызови `context.exportPackage(...)`
+и зарегистрируй реализацию интерфейса через `environment().services().register(...)` в `onEnable()`.
+RCP объявляет зависимость от аддона таким же способом. Доступ к сервису действует до выключения расширения.
+
+Собственную библиотеку подключай через `compileOnly` в Gradle и `context.library(uri, sha256)` в bootstrap.
+React скачивает указанный HTTPS JAR, проверяет SHA-256 и открывает его из `.libraries` в папке данных
+расширения. Указывай отдельную запись для каждого нужного транзитивного JAR.
+
+Этот пример требует сборку React с `ExtensionBootstrap`.
+
+### Выбор расширения
+
 | Аддон                                           | RCP                                                      |
 |-------------------------------------------------|----------------------------------------------------------|
 | `plugins/React/addons/`, файл `react-addon.yml` | `plugins/React/.rcp/providers/`, файл `rcp-metadata.yml` |
