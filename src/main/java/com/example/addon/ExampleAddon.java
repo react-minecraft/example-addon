@@ -22,6 +22,9 @@ public final class ExampleAddon extends JavaAddon {
     @Override
     public void onEnable() {
 
+        if (environment().dependencyAvailable(ExampleBootstrap.INFERENCE)) {
+            InferenceIntegration.logModels(environment());
+        }
         saveResource("config.yml", false);
         final YamlConfiguration config = YamlConfiguration.loadConfiguration(directory().resolve("config.yml").toFile());
         environment().listeners().register(new FailListener(
