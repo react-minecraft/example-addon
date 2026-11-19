@@ -66,7 +66,7 @@ React скачивает указанный HTTPS JAR, проверяет SHA-25
 
 ## Что делает пример
 
-- на `onEnable` копирует `config.yml` в `plugins/React/addons/example-addon/`;
+- на `onEnable` читает `plugins/React/addons/example-addon/config.yml`. При первом запуске создаёт его на языке сервера с `config-version`;
 - слушает `CheckFlagEvent` на шине событий React: он приходит перед каждым ростом VL, в том числе по результату RCP;
 - отправляет строку из конфига всем, у кого есть право `react.example.notify`;
 - слушатель регистрируется через `environment().listeners()`, React сам снимает его при выключении аддона.

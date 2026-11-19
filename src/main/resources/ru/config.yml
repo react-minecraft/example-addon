@@ -1,0 +1,8 @@
+# Игроки с этим правом получают сообщение.
+permission: react.example.notify
+
+# Плейсхолдеры: <player>, <check>, <violations>.
+message: '<color:#0EA5E9>[React Example]</color> <white><player> провалил проверку <check></white> <gray>(<violations>)'
+
+# Не меняйте версию конфигурации.
+config-version: 1

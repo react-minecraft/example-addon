@@ -1,0 +1,8 @@
+# Players with this permission receive the message.
+permission: react.example.notify
+
+# Placeholders: <player>, <check>, <violations>.
+message: '<color:#0EA5E9>[React Example]</color> <white><player> failed <check></white> <gray>(<violations>)'
+
+# Do not change the configuration version.
+config-version: 1

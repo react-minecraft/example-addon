@@ -14,6 +14,7 @@ dependencies {
     compileOnly("com.github.react-minecraft:rcp:${property("inferenceApiVersion")}")
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
     compileOnly("com.github.g4vrk.TextSerializer:legacy:1.0.0")
+    compileOnly("org.spongepowered:configurate-yaml:4.2.0")
 }
 
 tasks {

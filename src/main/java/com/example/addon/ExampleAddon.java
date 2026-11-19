@@ -1,7 +1,8 @@
 package com.example.addon;
 
 import com.g4vrk.react.api.addon.JavaAddon;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.ConfigurateException;
 
 /**
  * Entry point named by {@code mainClass} in {@code react-addon.yml}.
@@ -25,14 +26,21 @@ public final class ExampleAddon extends JavaAddon {
         if (environment().dependencyAvailable(ExampleBootstrap.INFERENCE)) {
             InferenceIntegration.logModels(environment());
         }
-        saveResource("config.yml", false);
-        final YamlConfiguration config = YamlConfiguration.loadConfiguration(directory().resolve("config.yml").toFile());
-        environment().listeners().register(new FailListener(
-                environment().text(),
-                environment().scheduler(),
-                config.getString("permission", ""),
-                config.getString("message", "")
-        ));
+        final String language = "en".equalsIgnoreCase(System.getProperty("user.language")) ? "en" : "ru";
+        try {
+            final ConfigurationNode config = environment().configs().file("config.yml", ConfigurationNode.class)
+                    .defaults(getClass().getClassLoader(), language + "/config.yml")
+                    .build()
+                    .loadNode();
+            environment().listeners().register(new FailListener(
+                    environment().text(),
+                    environment().scheduler(),
+                    config.node("permission").getString("react.example.notify"),
+                    config.node("message").getString("")
+            ));
+        } catch (final ConfigurateException exception) {
+            throw new IllegalStateException("Could not read the example addon config", exception);
+        }
 
     }
 
