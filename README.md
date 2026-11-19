@@ -66,18 +66,26 @@ React скачивает указанный HTTPS JAR, проверяет SHA-25
 
 ## Что делает пример
 
-- на `onEnable` читает `plugins/React/addons/example-addon/config.yml`. При первом запуске создаёт его на языке сервера с `config-version`;
+- на `onEnable` читает `plugins/React/addons/example-addon/config.yml`. При первом запуске создаёт его на языке JVM: для `en` используется английский, для остальных значений — русский;
 - слушает `CheckFlagEvent` на шине событий React: он приходит перед каждым ростом VL, в том числе по результату RCP;
 - отправляет строку из конфига всем, у кого есть право `react.example.notify`;
 - слушатель регистрируется через `environment().listeners()`, React сам снимает его при выключении аддона.
 
 ```yaml
 permission: react.example.notify
-# Плейсхолдеры: <player>, <check>, <violations>
-message: '<red>[React] <white><player> <gray>failed <white><check> <gray>(<white><violations><gray>)'
+# Плейсхолдеры: <player>, <check>, <violations>.
+message: '<color:#0EA5E9>[React Example]</color> <white><player> failed <check></white> <gray>(<violations>)'
+
+config-version: 1
 ```
 
 Сообщение понимает и MiniMessage, и `&`-коды.
+
+`ConfigFile` по умолчанию использует `ConfigMigrationChain.none()`: для старого файла без версии
+она добавляет `config-version: 1`, а файл с более новой версией не загружает. Когда формат
+изменится, добавь `.migrations(...)` с цепочкой последовательных шагов и обнови версию в
+обоих ресурсах. При структурной миграции React сохранит резервную копию исходного файла;
+отсутствующие ключи из ресурса дополняются только в памяти.
 
 ---
 
