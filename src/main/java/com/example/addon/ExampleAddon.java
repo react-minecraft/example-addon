@@ -1,5 +1,6 @@
 package com.example.addon;
 
+import org.bukkit.entity.Player;
 import com.g4vrk.react.api.addon.JavaAddon;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.ConfigurateException;
@@ -34,7 +35,7 @@ public final class ExampleAddon extends JavaAddon {
                     .loadNode();
             environment().listeners().register(new FailListener(
                     environment().text(),
-                    environment().scheduler(),
+                    environment().scheduler().<Player>mapEntity(environment().platform()::adaptPlayer),
                     config.node("permission").getString("react.example.notify"),
                     config.node("message").getString("")
             ));

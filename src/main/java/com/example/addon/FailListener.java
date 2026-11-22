@@ -7,7 +7,7 @@ import com.g4vrk.react.api.event.check.CheckFlagEvent;
 import com.g4vrk.react.api.text.TagMapper;
 import com.g4vrk.react.api.text.TextFormatter;
 import com.g4vrk.schedula.task.TickSchedule;
-import com.g4vrk.schedula.task.scheduler.Scheduler;
+import com.g4vrk.schedula.task.scheduler.TaskScheduler;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -28,13 +28,13 @@ final class FailListener {
     private static final TickSchedule SEND_SCHEDULE = TickSchedule.instant();
 
     private final TextFormatter text;
-    private final Scheduler scheduler;
+    private final TaskScheduler<Player> scheduler;
     private final String permission;
     private final String message;
 
     FailListener(
             final @NotNull TextFormatter text,
-            final @NotNull Scheduler scheduler,
+            final @NotNull TaskScheduler<Player> scheduler,
             final @NotNull String permission,
             final @NotNull String message
     ) {
@@ -50,7 +50,7 @@ final class FailListener {
     public void onFlag(final @NotNull CheckFlagEvent event) {
 
         final Check check = event.check();
-        final FlagTags tags = new FlagTags(
+        final FlagTagResolver tags = new FlagTagResolver(
                 escape(check.player().name()),
                 escape(check.name()),
                 String.format(Locale.ROOT, "%.1f", check.violations() + event.amount())
@@ -59,7 +59,7 @@ final class FailListener {
 
     }
 
-    private void send(final @NotNull FlagTags tags) {
+    private void send(final @NotNull FlagTagResolver tags) {
 
         final Component line = text.formatMapped(message, tags);
         for (final Player player : Bukkit.getOnlinePlayers()) {
@@ -81,7 +81,7 @@ final class FailListener {
     /**
      * Literal tag values captured when the flag is posted.
      */
-    private record FlagTags(@NotNull String player, @NotNull String check, @NotNull String violations) implements TagMapper {
+    private record FlagTagResolver(@NotNull String player, @NotNull String check, @NotNull String violations) implements TagMapper {
 
         @Override
         public @Nullable String map(final @NotNull String name, final @NotNull String args) {
