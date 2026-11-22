@@ -2,7 +2,7 @@ package com.example.addon;
 
 import com.g4vrk.react.api.check.Check;
 import com.g4vrk.react.api.event.EventPriority;
-import com.g4vrk.react.api.event.Subscribe;
+import com.g4vrk.react.api.event.bus.Subscribe;
 import com.g4vrk.react.api.event.check.CheckFlagEvent;
 import com.g4vrk.react.api.text.TagMapper;
 import com.g4vrk.react.api.text.TextFormatter;

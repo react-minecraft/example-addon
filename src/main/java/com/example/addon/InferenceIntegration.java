@@ -1,6 +1,6 @@
 package com.example.addon;
 
-import com.g4vrk.react.api.extension.AddonEnvironment;
+import com.g4vrk.react.api.extension.environment.AddonEnvironment;
 import com.g4vrk.react.inference.api.InferenceApi;
 import org.jetbrains.annotations.NotNull;
 
