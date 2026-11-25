@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.github.g4vrk.Schedula:common:2.0.0")
+    compileOnly("com.github.g4vrk.Schedula:common:2.0.1")
     compileOnly("com.github.react-minecraft.plugin:react-api:${property("reactVersion")}")
     compileOnly("com.github.react-minecraft.plugin:react-common:${property("reactVersion")}")
     compileOnly("com.github.react-minecraft:rcp:${property("inferenceApiVersion")}")
